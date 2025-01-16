@@ -1,12 +1,12 @@
 #!/bin/bash
 # Script per obtenir informació de les instàncies EC2 i guardar-la en un fitxer CSV
 # Autor: Alberto Trujillo
-# Exercici 18 15/1/2025
-# Versió: 1.1
-# Ús: ./E18.sh
+# Exercici 18 16/1/2025
+# Versió: 1.0
 
-# Definir la variable de la regió
-REGION="us-west-2" # Substitueix per la regió que necessites
+# Defineix les variables per a AWS CLI
+aws_region="us-east-1"
+ec2_instance_state="running"
 
 # Comprovació de les eines necessàries
 for cmd in aws jq; do
@@ -16,27 +16,32 @@ for cmd in aws jq; do
     fi
 done
 
-OUTPUT_FILE="ec2_instances.csv"
+# Consulta AWS EC2 per obtenir totes les instàncies que estan operatives
+aws ec2 describe-instances --region "$aws_region" --filters "Name=instance-state-name,Values=$ec2_instance_state" \
+    --query 'Reservations[*].Instances[*].[InstanceId, State.Name, InstanceType, Tags[?Key==`Name`].Value | [0]]' --output json > ec2_instances_temp.json
 
-# Crear fitxer CSV amb capçalera
-echo "InstanceID,Status,Type,Name" > "$OUTPUT_FILE"
-
-# Comprovar l'autenticació AWS abans d'obtenir dades
-aws sts get-caller-identity &> /dev/null
-if [ $? -ne 0 ]; then
-    echo "Error d'autenticació AWS. Comprova les teves credencials."
+# Comprovar si s'ha obtingut dades
+if [ ! -s ec2_instances_temp.json ]; then
+    echo "No s'han obtingut dades d'instàncies EC2. Comprova la teva configuració i regió."
+    rm ec2_instances_temp.json
     exit 1
 fi
 
-# Obtenir dades i escriure-les al fitxer
-aws ec2 describe-instances --region "$REGION" \
-    --query "Reservations[].Instances[].[InstanceId,State.Name,InstanceType,Tags[?Key=='Name'].Value | [0]]" \
-    --output json | jq -r '.[] | @csv' >> "$OUTPUT_FILE"
+# Crear fitxer CSV amb capçalera
+OUTPUT_FILE="ec2_instances.csv"
+echo "InstanceID,Status,Type,Name" > "$OUTPUT_FILE"
+
+# Convertir les dades JSON a CSV i desar-les al fitxer
+jq -r '.[] | map(tostring) | @csv' ec2_instances_temp.json >> "$OUTPUT_FILE"
 
 # Comprovació de l'èxit de l'operació
 if [ $? -eq 0 ]; then
     echo "Dades desades a $OUTPUT_FILE"
+    rm ec2_instances_temp.json
 else
-    echo "Error en obtenir informació d'instàncies EC2."
+    echo "Error en convertir informació d'instàncies EC2 a CSV."
+    rm ec2_instances_temp.json
     exit 1
 fi
+
+echo "CSV generat amb les instàncies operatives en el entorn d'AWS"

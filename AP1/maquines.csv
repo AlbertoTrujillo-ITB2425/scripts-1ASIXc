@@ -1,0 +1,4 @@
+InstanceID,Status,Type,Name
+"[""i-0f60f8704986dd8ac"",""running"",""t2.micro"",""Websrv1""]","[""i-01070092f4fb887f6"",""running"",""t2.micro"",""Websrv2""]","[""i-0a1f6462e0619dd5c"",""running"",""t2.micro"",""Websrv3""]"
+"[""i-0d8ba83e91cfac0b6"",""running"",""t2.micro"",""LinuxP2""]"
+
