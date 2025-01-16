@@ -23,3 +23,6 @@ do
 done < "$CSV_FILE"
 
 echo "Màquines creades correctament"
+
+
+

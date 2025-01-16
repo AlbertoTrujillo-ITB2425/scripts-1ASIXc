@@ -1,0 +1,5 @@
+Tipus d’instància,Tipus d’AMI,Security group,Nom de la instància (etiqueta)
+t2.micro,ami-01816d07b1128cd2d,sg-078c72f1fcfeacf6d,ITB Ubuntu 1
+t2.micro,ami-01816d07b1128cd2d,sg-078c72f1fcfeacf6d,ITB Ubuntu 2
+t2.micro,ami-01816d07b1128cd2d,sg-078c72f1fcfeacf6d,ITB Ubuntu 3
+
