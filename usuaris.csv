@@ -1,0 +1,11 @@
+username,shell,home,password,email
+mrodriguez,/bin/bash,/home/mrodriguez,securePass123,mrodriguez@ERROR404.local
+sfernandez,/bin/bash,/home/sfernandez,pass45678,sfernandez@ERROR404.local
+cgarcia,/bin/bash,/home/cgarcia,pass98765,cgarcia@ERROR404.local
+alejandra,/bin/bash,/home/alejandra,alejaPassword2025,alejandra@ERROR404.local
+rmorales,/bin/bash,/home/rmorales,rmorales2025,rmorales@ERROR404.local
+jmartinez,/bin/bash,/home/jmartinez,passwd1,jmartinez@ERROR404.local
+pvalencia,/bin/bash,/home/pvalencia,securePass2025,pvalencia@ERROR404.local
+dhernandez,/bin/bash,/home/dhernandez,pass7890,dhernandez@ERROR404.local
+mlopez,/bin/bash,/home/mlopez,randomPass123,mlopez@ERROR404.local
+nramirez,/bin/bash,/home/nramirez,passwd1987,nramirez@ERROR404.local

@@ -1,10 +1,9 @@
 #!/bin/bash
-# Script per llegir un fitxer CSV i crear usuaris al sistema
+# Script per llegir un fitxer CSV i eliminar usuaris del sistema
 # Autor: Alberto Trujillo
-# Exercici 14 15/1/2025
+# 16/1/2025
 # Versio: 1.0
-# Us: ./E14.sh <fitxer_csv>
-
+# Us: ./delete.sh <fitxer_csv>
 
 # Comprovacio de paràmetres
 if [ "$#" -ne 1 ]; then
@@ -12,10 +11,8 @@ if [ "$#" -ne 1 ]; then
    exit 1
 fi
 
-
 # Fitxer CSV
 CSV_FILE="$1"
-
 
 # Comprovacio que el fitxer existeix
 if [ ! -f "$CSV_FILE" ]; then
@@ -23,27 +20,24 @@ if [ ! -f "$CSV_FILE" ]; then
    exit 1
 fi
 
-
 # Log file
 LOG_FILE="logs.txt"
-
 
 # Creació del fitxer logs si no existeix
 if [ ! -f "$LOG_FILE" ]; then
    touch "$LOG_FILE"
 fi
 
-
-# Lectura del fitxer CSV i creació dels usuaris
+# Lectura del fitxer CSV i eliminació dels usuaris
 while IFS=, read -r user shell home password email; do
-   # Comprovem si l'usuari ja existeix
+   # Comprovem si l'usuari existeix
    if id "$user" &>/dev/null; then
-       echo "Usuari $user ja existent al sistema"
-       echo "Usuari $user ja existent al sistema" >> "$LOG_FILE"
+       # Eliminació de l'usuari
+       sudo userdel -r "$user"
+       echo "Usuari $user eliminat del sistema"
+       echo "Usuari $user eliminat del sistema" >> "$LOG_FILE"
    else
-       # Creació de l'usuari
-       sudo useradd -m -s "$shell" -d "$home" -p "$password" -c "$email" "$user"
-       echo "Usuari $user donat d'alta al sistema"
-       echo "Usuari $user donat d'alta al sistema" >> "$LOG_FILE"
+       echo "L'usuari $user no existeix al sistema"
+       echo "L'usuari $user no existeix al sistema" >> "$LOG_FILE"
    fi
 done < "$CSV_FILE"
