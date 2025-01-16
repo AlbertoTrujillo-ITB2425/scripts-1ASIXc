@@ -4,4 +4,5 @@
 #Versió: 1.0
 
 
-echo "El $USER està llegint el llibre"
+echo "El \$USER:$USER està llegint el llibre" 
+
