@@ -5,7 +5,10 @@
 
 # Funció per comprovar si una nota és una D, C-, C+, B o A
 comprova_nota() {
+    # Variable local per emmagatzemar la nota
     local nota=$1
+
+    # Estructura de decisió "case" per comparar la nota i mostrar el resultat
     case $nota in
         0|1|2)
             echo "La nota és una D"
@@ -23,14 +26,15 @@ comprova_nota() {
             echo "La nota és una A"
             ;;
         *)
+            # Opció per defecte si la nota no està entre 0 i 10
             echo "Error: La nota ha de ser un nombre entre 0 i 10."
             ;;
     esac
 }
 
-# Demanem la nota
+# Demanem a l'usuari que introdueixi la nota
 echo "Introdueix la nota: "
 read nota
 
-# Comprovem la nota
+# Invoquem la funció per comprovar la nota
 comprova_nota $nota

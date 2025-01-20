@@ -2,7 +2,7 @@
 # Script per obtenir informació de les instàncies EC2 i guardar-la en un fitxer CSV
 # Autor: Alberto Trujillo
 # Exercici 18 16/1/2025
-# Versió: 1.0
+# Versio: 1.0
 
 # Defineix les variables per a AWS CLI
 aws_region="us-east-1"

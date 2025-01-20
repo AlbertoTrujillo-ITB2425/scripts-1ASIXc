@@ -19,15 +19,15 @@ calculate_disk_usage() {
     du -sh "$dir"
 }
 
-# Iterem sobre la llista dels directoris i calculam l'ocupació
+# Iterem sobre tots els paràmetres passats al script
 for dir in "$@"; do
-
-    # Comprovam si el directori existeix
+    # Comprovem si el paràmetre és un directori vàlid
     if [ -d "$dir" ]; then
+        # Si és un directori, calculem i mostrem l'ocupació
         calculate_disk_usage "$dir"
     else
-        echo "ERROR: '$dir' no és un directori."
+        # Si no és un directori, mostrem un error
+        echo "ERROR: '$dir' no és un directori vàlid."
     fi
 done
 exit 0
-

@@ -5,34 +5,26 @@
 # Versio: 1.0
 # Us: ./E14.sh <fitxer_csv>
 
-
-# Comprovacio de paràmetres
+# Comprovació de paràmetres
 if [ "$#" -ne 1 ]; then
    echo "Error: S'ha de passar el nom del fitxer CSV com a argument"
    exit 1
 fi
 
-
-# Fitxer CSV
+# Assignació del nom del fitxer CSV a una variable
 CSV_FILE="$1"
 
-
-# Comprovacio que el fitxer existeix
+# Comprovació d'existència del fitxer CSV
 if [ ! -f "$CSV_FILE" ]; then
    echo "Error: El fitxer $CSV_FILE no existeix"
    exit 1
 fi
 
-
-# Log file
+# Creació del fitxer de logs si no existeix
 LOG_FILE="logs.txt"
-
-
-# Creació del fitxer logs si no existeix
 if [ ! -f "$LOG_FILE" ]; then
    touch "$LOG_FILE"
 fi
-
 
 # Lectura del fitxer CSV i creació dels usuaris
 while IFS=, read -r user shell home password email; do

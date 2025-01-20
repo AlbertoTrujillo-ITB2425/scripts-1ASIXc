@@ -21,7 +21,7 @@ nom_fitxer="backup_$(basename $directori_a_copiar)_$data.tar.gz"
 if [ ! -d "$directori_a_copiar" ]; then
     echo "Error: El directori $directori_a_copiar no existeix"
     exit 1
-    fi
+fi
 
 # Comprovació de si ja existeix un fitxer amb el mateix nom
 if [ -f "$directori_desti/$nom_fitxer" ]; then
@@ -29,7 +29,10 @@ if [ -f "$directori_desti/$nom_fitxer" ]; then
     exit 2
 fi
 
-# Fer la còpia amb tar
+# Realització de la còpia de seguretat
 tar -czf "$directori_desti/$nom_fitxer" "$directori_a_copiar"
+
+# Missatge de confirmació
 echo "Còpia de seguretat feta correctament al fitxer $directori_desti/$nom_fitxer"
+
 exit 0

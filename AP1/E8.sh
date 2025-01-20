@@ -16,6 +16,7 @@ fi
 if [ -d "$1" ]; then
    echo "El contingut del directori $1 és:"
    ls -l "$1"
+# si fa un ls -l del contingut es un directori si no no es un directori 
 else
    echo "ERROR: '$1' no és un directori."
 fi
