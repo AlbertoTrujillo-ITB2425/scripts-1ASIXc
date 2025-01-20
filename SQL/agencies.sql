@@ -1,3 +1,4 @@
+USE agenciaviatges;
 -- 1) Nom de les sucursals dels hotels de la ciutat de Barcelona.
 SELECT DISTINCT s.nomSuc
 FROM sucursal s
@@ -103,58 +104,51 @@ WHERE NOT EXISTS (
 -- 15) Nom de l'hotel amb més places.
 SELECT nom
 FROM hotel
-ORDER BY num_places DESC
-LIMIT 1;
+WHERE num_places = (select max(num_places) from Hotel);
 
 -- 16) Nombre total de places d'hotel.
-SELECT SUM(num_places) AS total_places
-FROM hotel;
+SELECT SUM(num_places) FROM hotel;
 
 -- 17) Turistes que no s'han allotjat en cap hotel.
 SELECT t.nom, t.cognoms
 FROM turista t
-LEFT JOIN allotjament a ON t.CodTur = a.CodTur
-WHERE a.CodHot IS NULL;
+WHERE CodTur not in (select codTur from Allotjament);
+
 
 -- 18) Nombre total d'hotels.
-SELECT COUNT(*) AS total_hotels
-FROM hotel;
+SELECT COUNT(*) FROM hotel;
 
 -- 19) Sucursal del vol amb més places totals.
-SELECT s.nomSuc
-FROM sucursal s
-JOIN vol v ON s.CodSuc = v.CodSuc
-ORDER BY v.places_tot DESC
-LIMIT 1;
+SELECT distinct s.nomSuc
+FROM sucursal s JOIN vol v ON s.CodSuc = v.CodSuc
+where v.places_tot = (select max(places_tot) from Vol);
+
 
 -- 20) Sucursal del vol amb més places de turista.
-SELECT s.nomSuc
-FROM sucursal s
-JOIN vol v ON s.CodSuc = v.CodSuc
-ORDER BY v.places_tur DESC
-LIMIT 1;
+SELECT distinct s.nomSuc
+FROM sucursal s JOIN vol v ON s.CodSuc = v.CodSuc
+where v.places_tur = (select max(places_tur) from Vol);
 
--- 21) Sucursals amb més de tres vols.
-SELECT s.nomSuc
-FROM sucursal s
-JOIN vol v ON s.CodSuc = v.CodSuc
+-- 21) Sucursals amb més de dos vols.
+SELECT s.nomSuc, count(*)
+FROM sucursal s JOIN vol v ON s.CodSuc = v.CodSuc
 GROUP BY s.nomSuc
-HAVING COUNT(v.num_vol) > 3;
+having count(*) > 2;
 
 -- 22) Hotels sense sucursal.
-SELECT h.nom
+SELECT h.nom, ciutat
 FROM hotel h
 WHERE h.CodSuc IS NULL;
 
 -- 23) Sucursals sense cap hotel.
 SELECT s.nomSuc
 FROM sucursal s
-LEFT JOIN hotel h ON s.CodSuc = h.CodSuc
-WHERE h.CodHot IS NULL;
+WHERE not exists (select *
+				from Hotel h
+                where s.CodSuc = h.CodSuc);
 
 -- 24) Turistes que han viatjat a París.
 SELECT t.nom, t.cognoms
-FROM turista t
-JOIN viatge v ON t.CodTur = v.CodTur
-JOIN vol vo ON v.num_vol = vo.num_vol
+FROM (turista t JOIN viatge v ON t.CodTur = v.CodTur)
+	JOIN vol vo ON v.num_vol = vo.num_vol
 WHERE vo.desti = 'París';

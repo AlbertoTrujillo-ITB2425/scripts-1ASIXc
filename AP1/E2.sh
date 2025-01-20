@@ -3,13 +3,17 @@
 #Autor: Alberto Trujillo
 #Versió: 1.0
 
-# Definim la variable nomusuari
-nomusuari="$USER"  # O pots assignar-li un valor com "el_teu_nom"
+# Aquest script mostra una salutació personalitzada amb l'hora, la data i el nom d'usuari.
 
-# Obtenim l'hora i la data actual
+# Definim una variable per emmagatzemar el nom d'usuari.
+# La variable $USER conté el nom d'usuari actual del sistema.
+nomusuari="$USER"
+
+# Obtenim l'hora actual en format de 24 hores (HH:MM).
 hora=$(date +%H:%M)
+
+# Obtenim la data actual en format dia/mes/any.
 DiaMesAny=$(date +%d/%m/%Y)
 
-# Mostrem el missatge
-echo "Hola món, son les $hora del dia $DiaMesAny i soc l’usuari $nomusuari"
-
+# Mostrem un missatge a la terminal, personalitzant la salutació amb les variables.
+echo "Hola món, són les $hora del dia $DiaMesAny i soc l’usuari $nomusuari"
