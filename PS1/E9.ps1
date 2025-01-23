@@ -1,6 +1,6 @@
-# Autor: Alberto Trujillo.
-# Data: January 23, 2025.
-# Descripcio: Script per comparar diferents fragments de codi en PowerShell(rebent el nom per parametres).
+# Author: Alberto Trujillo.
+# Date: January 23, 2025.
+# Description: Script to compare different code fragments in PowerShell (receives directory name as parameter).
 
 Write-Host "Ingrese la ruta del directorio:"
 $directorio = Read-Host

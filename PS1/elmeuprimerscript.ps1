@@ -1,5 +1,7 @@
-﻿$data = Get-Date -Format "dd/MM/yyyy"
+﻿# Get the current date
+$data = Get-Date -Format "dd/MM/yyyy"
 Write-Output $data
-# Script per mostrar el contingut del directori "Documents"
+
+# Get the contents of the "Documents" directory
 $documentsPath = [Environment]::GetFolderPath("MyDocuments")
 Get-ChildItem -Path $documentsPath

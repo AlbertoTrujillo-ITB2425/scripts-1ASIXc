@@ -1,13 +1,15 @@
-# Autor: Alberto Trujillo.
-# Data: January 23, 2025.
-# Descripció: Script per comparar diferents fragments de codi en PowerShell.
 
+
+# Author: Alberto Trujillo.
+# Date: January 23, 2025.
+# Description: Script to calculate the size of directories within C:\Users.
 
 Get-ChildItem "C:\Users" -Directory | ForEach-Object {
+    # Measure the time taken to calculate the directory size
     $startTime = Measure-Command {
-        $dir = $_.FullName
-        (Get-ChildItem $dir -Recurse | Measure-Object -Sum Length).Sum
+        $dir = $_.FullName 
+        (Get-ChildItem $dir -Recurse | Measure-Object -Sum Length).Sum 
     }
-    Write-Host "El directori $($_.FullName) ocupa un tamany de $($startTime.TotalSeconds) bytes"
- }
- 
+    # Display the directory name and the time taken to calculate its size
+    Write-Host "The directory $($_.FullName) occupies $($startTime.TotalSeconds) bytes"
+}
